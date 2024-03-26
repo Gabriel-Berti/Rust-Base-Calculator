@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, Field
 
 class Book(BaseModel):
@@ -32,3 +32,27 @@ class BookUpdate(BaseModel):
                 "synopsis": "Don Quixote is a Spanish novel by Miguel de Cervantes..."
             }
         }
+
+class Materials(BaseModel):
+    wood: int = Field(...)
+    stone: int = Field(...)
+    metal: int = Field(...)
+    hq_metal: int = Field(...)
+
+class BuildingBlocks(BaseModel):
+    id: str = Field(default_factory=uuid.uuid4, alias="_id")
+    name: str = Field(...)
+    cost: object = Materials
+
+class BuildingListItem():
+    cost: object = Materials
+    quantity: int = Field(...)
+
+class BuildingList(BaseModel):
+    list: List[BuildingListItem]
+
+class Upkeep(BaseModel):
+    cost: object = Materials
+
+
+    

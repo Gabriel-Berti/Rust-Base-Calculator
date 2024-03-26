@@ -29,7 +29,7 @@ def find_book(id: str, request: Request):
 
 @router.put("/{id}", response_description="Update a book", response_model=Book)
 def update_book(id: str, request: Request, book: BookUpdate = Body(...)):
-    book = {k: v for k, v in book.dict().items() if v is not None}
+    book = {k: v for k, v in book.model_dump().items() if v is not None}
     if len(book) >= 1:
         update_result = request.app.database["books"].update_one(
             {"_id": id}, {"$set": book}
