@@ -2,7 +2,7 @@ from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
 
-from models import Book, BookUpdate
+from models import Book, BookUpdate, BuildingBlock
 
 router = APIRouter()
 
@@ -54,3 +54,15 @@ def delete_book(id: str, request: Request, response: Response):
         return response
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with ID {id} not found")
+
+@router.post("/building-blocks",response_description="Adding New Building Blocks", status_code=status.HTTP_201_CREATED)
+def create_building_blocks(request: Request, blocks: List[BuildingBlock] = Body(...)):
+    insertedBlock =  []
+    for block in blocks:
+        block = jsonable_encoder(block)
+        new_block = request.app.database["building-blocks"].insert_one(block)
+        created_book = request.app.database["building-blocks"].find_one(
+            {"_id": new_block.inserted_id}
+        )
+        insertedBlock.append(created_book)
+    return {"building-blocks": insertedBlock}

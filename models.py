@@ -39,20 +39,11 @@ class Materials(BaseModel):
     metal: int = Field(...)
     hq_metal: int = Field(...)
 
-class BuildingBlocks(BaseModel):
+class BuildingBlock(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str = Field(...)
-    cost: object = Materials
-
-class BuildingListItem():
-    cost: object = Materials
-    quantity: int = Field(...)
-
-class BuildingList(BaseModel):
-    list: List[BuildingListItem]
-
-class Upkeep(BaseModel):
-    cost: object = Materials
+    cost: Materials
 
 
-    
+
+
