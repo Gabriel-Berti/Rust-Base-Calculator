@@ -1,8 +1,13 @@
-from fastapi import APIRouter, Body, Request, Response, HTTPException, status
+import re
+from fastapi import APIRouter, Body, Query, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
-from typing import List
+from typing import List, Optional
+from dtos.buildinglistdto import BuildingList
+from dtos.totalcostdto import TotalCostDTO
 
-from models import Book, BookUpdate, BuildingBlock
+
+from models import Book, BookUpdate, BuildingBlock, BuildingBlocksCollection
+from services.calculatetotalcost import calculate_total_cost
 
 router = APIRouter()
 
@@ -61,8 +66,22 @@ def create_building_blocks(request: Request, blocks: List[BuildingBlock] = Body(
     for block in blocks:
         block = jsonable_encoder(block)
         new_block = request.app.database["building-blocks"].insert_one(block)
-        created_book = request.app.database["building-blocks"].find_one(
+        created_block = request.app.database["building-blocks"].find_one(
             {"_id": new_block.inserted_id}
         )
-        insertedBlock.append(created_book)
+        insertedBlock.append(created_block)
     return {"building-blocks": insertedBlock}
+
+@router.get("/building-blocks/", response_description="List searched blocks", response_model=BuildingBlocksCollection)
+def get_building_blocks(request: Request, name: Optional[str] = Query(None)):
+    if name:
+        regex = re.compile(name, re.IGNORECASE)
+        blocks = list(request.app.database["building-blocks"].find({"name": {"$regex" : regex}}))
+        return BuildingBlocksCollection(buildingBlocks=blocks)
+    
+    blocks = list(request.app.database["building-blocks"].find())
+    return BuildingBlocksCollection(buildingBlocks=blocks)
+
+@router.post("/calculate", response_description="Calculates total cost based on the building list received", response_model=TotalCostDTO)
+def post_calcute(buildindList: BuildingList = Body(...)):
+    calculate_total_cost(buildindList)

@@ -44,6 +44,8 @@ class BuildingBlock(BaseModel):
     name: str = Field(...)
     cost: Materials
 
+class BuildingBlocksCollection(BaseModel):
+    buildingBlocks: List[BuildingBlock]
 
 
 
