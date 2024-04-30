@@ -1,4 +1,7 @@
-class MaterialsDTO:
+from pydantic import BaseModel
+
+
+class MaterialsDTO(BaseModel):
     wood: int
     stone: int
     metal: int

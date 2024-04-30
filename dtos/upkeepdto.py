@@ -1,4 +1,5 @@
+from pydantic import BaseModel
 from .materialsdto import MaterialsDTO
 
-class UpkeepDTO:
+class UpkeepDTO(BaseModel):
     cost: MaterialsDTO

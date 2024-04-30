@@ -1,6 +1,7 @@
+from pydantic import BaseModel
 from .materialsdto import MaterialsDTO
-from .upkeepdto import UpkeepDTO
+# from .upkeepdto import UpkeepDTO
 
-class TotalCostDTO:
-    upKeepTime: UpkeepDTO
+class TotalCostDTO(BaseModel):
+    #upKeepTime: UpkeepDTO
     materialTotalCost: MaterialsDTO

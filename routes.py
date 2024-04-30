@@ -82,6 +82,10 @@ def get_building_blocks(request: Request, name: Optional[str] = Query(None)):
     blocks = list(request.app.database["building-blocks"].find())
     return BuildingBlocksCollection(buildingBlocks=blocks)
 
-@router.post("/calculate", response_description="Calculates total cost based on the building list received", response_model=TotalCostDTO)
-def post_calcute(buildindList: BuildingList = Body(...)):
-    return calculate_total_cost(buildindList)
+@router.post("/calculate", response_description="Calculates total cost based on the building list received")
+def post_calcute(buildingList: BuildingList = Body(...)):
+    materialTotalCost = calculate_total_cost(buildingList)
+    totalCost = {
+        "materialTotalCost": materialTotalCost
+    } 
+    return  totalCost
