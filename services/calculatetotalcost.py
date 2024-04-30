@@ -5,7 +5,7 @@ def calculate_total_cost(buildingList: BuildingList):
     totalCost: MaterialsDTO
     for item in buildingList.list:
         print(item.cost)
-        cost = item.cost.keys()
+        cost = list(item.cost.keys())
         quantity = item.quantity
         for item in cost:
             totalCost[item] = totalCost[item] + (cost[item] * quantity)
