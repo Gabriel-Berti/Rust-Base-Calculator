@@ -84,4 +84,4 @@ def get_building_blocks(request: Request, name: Optional[str] = Query(None)):
 
 @router.post("/calculate", response_description="Calculates total cost based on the building list received", response_model=TotalCostDTO)
 def post_calcute(buildindList: BuildingList = Body(...)):
-    calculate_total_cost(buildindList)
+    return calculate_total_cost(buildindList)

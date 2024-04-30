@@ -1,4 +1,4 @@
-from materialsdto import MaterialsDTO
+from .materialsdto import MaterialsDTO
 
 class UpkeepDTO:
     cost: MaterialsDTO
