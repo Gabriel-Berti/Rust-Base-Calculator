@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from .buildinglistitemdto import BuildingListItem
+from .building_list_item_dto import BuildingListItem
 
 class BuildingList(BaseModel):
     list: List[BuildingListItem]

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from .materialsdto import MaterialsDTO
+from .materials_dto import MaterialsDTO
 
 class BuildingListItem(BaseModel):
     cost: MaterialsDTO
