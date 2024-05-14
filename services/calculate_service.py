@@ -20,7 +20,7 @@ def calculate_upkeep_cost(buildingList: BuildingList, blocksQuantity: int):
             tax = ((15 * 0.1) + (50 + 0.15) + (125 * 0.2) + (blocksQuantity - 190 * 0.333))/ blocksQuantity
     
     for item in buildingList.list:
-        wood = wood + (item.cost.wood * item.quantity * tax)
+        wood = wood + ((item.cost.wood - item.cost.twig) * item.quantity * tax)
         metal = metal + (item.cost.metal * item.quantity * tax)
         stone = stone + (item.cost.stone * item.quantity * tax)
         hq_metal = hq_metal + (item.cost.hq_metal * item.quantity * tax)
