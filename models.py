@@ -12,6 +12,7 @@ class Materials(BaseModel):
 class BuildingBlock(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str = Field(...)
+    isUpKeep: bool = Field(...)
     cost: Materials
 
 class BuildingBlocksCollection(BaseModel):
